@@ -1,0 +1,629 @@
+
+
+html,body{
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	font-size: 14px;
+}
+p,h1,h2,h3,h4,h5{
+	padding: 0;
+	margin: 0;
+}
+li{
+	list-style: none;
+}
+input{
+	border: solid 1px #aaa;
+	height: 18px;
+	width: 80px;
+	padding: 2px;
+	font-size: 12px;
+}
+
+table{
+	border-collapse:collapse;
+	border: solid 1px #aaa;
+	font-size: 14px;
+}
+td,th{
+	padding: 0;
+}
+img{
+	display: block;
+}
+#vm{
+	height: 100%;
+}
+
+.head{
+	width: 100%;
+	height: 100px;
+	display: flex;
+	flex-direction: column;
+}
+.head .menu{
+	width: 100%;
+	display: flex;
+	background-color: #E3E3E5;
+	padding: 5px 0 0 5px;
+	box-sizing: border-box;
+}
+.head .menu .menu-item{
+	font-size: 12px;
+	padding: 6px 12px;
+	cursor: pointer;
+}
+.head .menu .menu-item.active{
+	background: #fff;
+	color: #65AD3E;
+	font-weight: 600;
+}
+
+/* 工具  */
+.head .tool{
+	width: 100%;
+	padding: 3px 5px;
+	box-sizing: border-box;
+	flex: 1;
+	color: #555;
+}
+.tool-box{
+	display: flex;
+	flex-wrap: wrap;
+	flex: 1;
+	width: 100%;
+	height: 100%;
+}
+#formula,#data,#instrument,#system{
+	display: none;
+}
+
+/*工具item*/
+.tool-box .tool-item{
+	cursor: pointer;
+}
+.tool-box .tool-item .tool-list{
+	position: absolute;
+	background-color: #fff;
+	padding: 3px;
+	border: solid 1px #aaa;
+	box-shadow: 0 2px 3px #555;
+	z-index: 100;
+}
+.tool-box .tool-item .tool-list .tool-list-item:hover{
+	cursor: pointer;
+	background-color: #CCE8CF;
+}
+.tool-box .tool-item i.fa-caret-down{
+	cursor: pointer;
+	text-align: center;
+}
+.tool-box .tool-item i.fa-caret-down:hover{
+	background-color: #CCE8CF;
+}
+
+
+/* 工具  文件模块 */
+.tool-item.file{
+	height: 100%;
+	width: 130px;
+	display: flex;
+	/*flex-direction: column;*/
+	justify-content: center;
+	align-items: center;
+	color: #555;
+	position: relative;
+	border-right: solid 1px #ddd;
+}
+.tool-item.file .icon{
+	display: flex;
+	font-size: 12px;
+	align-items: center;
+	justify-content: space-around;
+}
+.tool-item.file .icon:hover{
+	background-color: #CCE8CF;
+}
+.tool-item.file .fa-folder-open{
+	font-size: 26px;
+	text-align: center;
+	background-color: #fff;
+}
+.tool-item.file .tool-list{
+	position: absolute;
+	top: 50px;
+	width: 60px;
+}
+.tool-item.file .right{
+	display: flex;
+	flex-direction: column;
+	margin-left: 10px;
+}
+.tool-item.file .right i{
+	color: #7EA5EE;
+}
+.tool-item.file .right .common:hover{
+	background-color: #CCE8CF;
+}
+
+/* 预览*/
+.tool-item.preview{
+	display: flex;
+	/*flex-direction: column;*/
+	align-items: center;
+	height: 100%;
+	padding: 0 10px;
+	border-right: solid 1px #ddd;
+}
+.tool-item.preview .con{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 2px 8px;
+	font-size: 12px;
+}
+/*.tool-item.preview .con .text{
+	font-size: 14px;
+}*/
+.tool-item.preview .con:hover{
+	background-color: #CCE8CF;
+}
+.tool-item.preview i{
+	font-size: 30px;
+	color: #7EA5EE;
+}
+
+/* 工具 复制剪切粘贴板 */
+.tool-item.plate{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-left: 5px;
+	font-size: 10px;
+
+}
+.tool-item.plate>button{
+	padding: 2px;
+	background-color: #fff;
+	border: none;
+	font-size: 12px;
+}
+.tool-item.plate>button:hover{
+	background-color: #CCE8CF;
+}
+.tool-item.plate i{
+	color: #7EA5EE;
+}
+
+/* 工具 格式刷 */
+.tool-item.format{
+	display: flex;
+	align-items: center;
+	margin-left: 5px;
+	padding: 0 3px;
+	border-right: solid 1px #ddd;
+}
+.tool-item.format .brush{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 5px;
+}
+.tool-item.format .brush:hover{
+	background-color: #CCE8CF;
+}
+.tool-item.format .fa-paint-brush{
+	color: #CEA6F3;
+	font-size: 20px;
+}
+
+/* 工具 文本字体字号选择器 */
+.tool-item.word{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding: 0 3px;
+	border-right: solid 1px #ddd;
+}
+.tool-item.word .input{
+	display: flex;
+}
+.tool-item.word .input .down{
+	margin-left: -13px;
+	width: 12px;
+	height: 23px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.tool-item.word .input .family{
+	display: flex;
+	position: relative;
+	height: 100%;
+}
+.tool-item.word .input .family .tool-list{
+	top: 25px;
+	width: 100px;
+}
+.tool-item.word .input .size{
+	display: flex;
+	align-items: center;
+	position: relative;
+	height: 100%;
+}
+.tool-item.word .input .size input{
+	width: 60px;
+}
+
+.tool-item.word .input .size .fa-plus-square,.tool-item.word .input .size .fa-minus-square{
+	font-size: 20px;
+	margin-left: 3px;
+	color: #7EA5EE;
+}
+.tool-item.word .input .size .tool-list{
+	position: absolute;
+	top: 23px;
+	width: 50px;
+}
+
+.tool-item.word .quick{
+	display: flex;
+	margin-top: 6px;
+}
+.tool-item.word .quick>div{
+	display: flex;
+	margin-right: 6px;
+	height: 20px;
+}
+.tool-item.word .quick>div>i{
+	width: 100%;
+    height: 20px;
+    padding: 0 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tool-item.word .quick>div>i.active{
+	background-color: #8ECB94;
+}
+.tool-item.word .quick>div:hover{
+	background-color: #CCE8CF;
+}
+
+.tool-item.word .quick .border{
+	top: 20px;
+}
+
+/* 布局工具   */
+.tool-item.flex{
+	margin-left: 5px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-right: 5px;
+	border-right: solid 1px #ddd;
+}
+.tool-item.flex .vertical{
+	display: flex;
+}
+.tool-item.flex .vertical>div{
+	font-size: 16px;
+	color: #777;
+	min-width: 16px;
+	height: 20px;
+	width: 24px;
+}
+.tool-item.flex .vertical>div>i{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.tool-item.flex .vertical>div>i:hover{
+	background-color: #CCE8CF;
+}
+.tool-item.flex .vertical>div>i.active{
+	background-color: #99D39F;
+}
+.tool-item.flex .horizontal{
+	display: flex;
+}
+.tool-item.flex .horizontal>div{
+	font-size: 16px;
+	color: #777;
+	min-width: 16px;
+	height: 20px;
+	width: 24px;
+}
+.tool-item.flex .horizontal>div>i{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.tool-item.flex .horizontal>div>i:hover{
+	background-color: #CCE8CF;
+}
+.tool-item.flex .horizontal>div>i.active{
+	background-color: #99D39F;
+}
+
+/* 合并单元格  */
+.tool-item.mergeCell{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-left: 10px;
+	font-size: 10px;
+	position: relative;
+}
+.tool-item.mergeCell .columns{
+	font-size: 25px;
+	color: #77AE59;
+	width: 100%;
+	text-align: center;
+}
+.tool-item.mergeCell .columns:hover,.tool-item.mergeCell .icon:hover{
+	background-color: #CCE8CF;
+}
+.tool-item.mergeCell .tool-list{
+	top: 55px;
+}
+
+/* 插入单元格  */
+.tool-item.insertCell{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-left: 10px;
+	font-size: 10px;
+	position: relative;
+}
+.tool-item.insertCell .insert{
+	font-size: 25px;
+	color: #77AE59;
+	width: 100%;
+	text-align: center;
+}
+.tool-item.insertCell .insert:hover,.tool-item.insertCell .icon:hover{
+	background-color: #CCE8CF;
+}
+.tool-item.insertCell .tool-list{
+	top: 55px;
+	left: 0;
+	width: 100px;
+}
+
+/* 删除单元格  */
+.tool-item.unsertCell{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-left: 10px;
+	font-size: 10px;
+	position: relative;
+	padding-right: 5px;
+	border-right: solid 1px #ddd;
+}
+.tool-item.unsertCell .unsert{
+	font-size: 25px;
+	color: #77AE59;
+	width: 100%;
+	text-align: center;
+}
+.tool-item.unsertCell .insert:hover,.tool-item.unsertCell .icon:hover{
+	background-color: #CCE8CF;
+}
+.tool-item.unsertCell .tool-list{
+	top: 55px;
+	left: 0;
+	width: 100px;
+}
+
+/* 常用函数  */
+.tool-item.function{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-left: 10px;
+	font-size: 10px;
+	position: relative;
+}
+.tool-item.function .formula{
+	font-size: 25px;
+	color: #7EA5EE;
+	width: 100%;
+	text-align: center;
+}
+.tool-item.function .insert:hover,.tool-item.function .icon:hover{
+	background-color: #CCE8CF;
+}
+.tool-item.function .tool-list{
+	top: 55px;
+	left: 0;
+	width: 100px;
+}
+
+/*  函数公式  */
+/* 算术运算函数  */
+#formula .tool-item{
+	display: flex;
+	/*flex-direction: column;*/
+	justify-content: center;
+	align-items: center;
+	padding:0 5px;
+	font-size: 10px;
+	position: relative;
+}
+#formula .tool-item:not(:last-child){
+	border-right: solid 1px #ddd;
+}
+#formula .tool-item .right{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	margin-left: 5px;
+}
+#formula .tool-item .right i{
+	color: #008000;
+}
+#formula .tool-item .formula{
+	font-size: 25px;
+	color: #7EA5EE;
+	width: 100%;
+	text-align: center;
+}
+#formula .tool-item .insert:hover,#formula .tool-item .icon:hover{
+	background-color: #CCE8CF;
+}
+#formula .tool-item .tool-list{
+	top: 55px;
+	left: 0;
+	width: 100px;
+}
+
+#data .tool-item{
+	display: flex;
+	/*flex-direction: column;*/
+	justify-content: center;
+	align-items: center;
+	padding:0 5px;
+	font-size: 10px;
+	position: relative;
+}
+#data .tool-item:not(:last-child){
+	border-right: solid 1px #ddd;
+}
+#data .tool-item .left .top{
+	font-size: 25px;
+	color: #7EA5EE;
+	width: 100%;
+	text-align: center;
+}
+#data .tool-item .right{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-left: 10px;
+}
+
+
+
+
+/*tab  */
+#page-tab{
+	height: 30px;
+	border-top: solid 1px #ddd;
+	border-bottom: solid 1px #ddd;
+}
+#page-tab #menu-list a{
+	background-color: #f9f9f9;
+	color: #666;
+}
+
+#page-tab #menu-list a.active {
+	background-color: #E2EDDA;
+    color: #666;
+    border-bottom: solid 2px #81B369;
+    box-sizing: border-box;
+}
+#page-tab #menu-list a.active:hover {
+    color: #666;
+}
+#page-tab #menu-list a.active .menu-close{
+	color: #666;
+}
+
+
+
+
+.content{
+	padding: 3px;
+	width: 100%;
+	height: calc(100% - 200px);
+	box-sizing: border-box;
+}
+#table-head th,#table-left td,#table-body td{
+	min-width: 100px;
+	height: 30px;
+	border: solid 1px #ccc;
+}
+
+
+#table-left table,#table-left td{
+	border-right: none;
+}
+.content .main-table{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+}
+.content .main-table .table-head{
+	overflow: hidden;
+}
+.content .main-table .table-left-and-body{
+	height: 100%;
+	display: flex;
+}
+.content .main-table .table-left{
+	overflow: hidden;
+}
+.content .main-table .table-body{
+	width: calc(100% - 110px);
+	overflow: auto;
+}
+.content .main-table .table-body td .cell.active{
+	box-sizing: border-box;
+	background-color: #CCE8CF;
+	border: solid 1px #5BA532;
+}
+#table-body td{
+	overflow: hidden;
+}
+#table-body td .cell{
+	width: 100%;
+	height: 100%;
+	line-height: 100%;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	border: none;
+	outline: none;
+	resize: none;
+	text-align: center;
+}
+
+.main-table .table-head th,.main-table .table-left td{
+	background-color: #F0F0F0;
+}
+.content .main-table .table-head th{
+	background-color: #F0F0F0;
+}
+
+
+#selectDiv{
+	position: absolute;
+	width:0px;
+	height:0px;
+	font-size: 0px; 
+	margin: 0px; 
+	padding: 0px; 
+	border: 1px dashed rgb(0, 153, 255); 
+	background-color: rgb(195, 213, 237); 
+	z-index: 1000; 
+	opacity: 0.6; 
+	display:none
+}
+
+
+

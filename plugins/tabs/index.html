@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery打开多个标签页代码</title>
+<meta charset="utf-8" />
+
+<link href="css/style.css" rel="stylesheet" />
+<link href="css/tabstyle.css" rel="stylesheet" />
+
+<script src="js/jquery.min.js"></script>
+<script src="js/tab.js"></script>
+
+</head>
+<body><script src="/demos/googlegg.js"></script>
+<div class="wapper">
+	<div class="menu">
+		<a href="content.html#1">菜单管理</a>
+		<a href="content.html#2">角色管理</a>
+		<a href="content.html#3">人员管理</a>
+		<a href="content.html#4">角色权限配置</a>
+		<a href="content.html#5">用户管理</a>
+		<a href="content.html#6">工单管理</a>
+		<a href="content.html#7">创建新装单</a>
+		<a href="content.html#8">查询单据</a>
+		<a href="content.html#9">费用管理</a>
+		<a href="content.html#10">财务报帐</a>
+		<a href="content.html#11">企业维护</a>
+		<a href="content.html#12">省份维护</a>
+		<a href="content.html#13">国家维护</a>
+		<a href="content.html#14">GPS地址位置管理</a>
+		<a href="content.html#15">点管理</a>
+		<a href="content.html#16">gggggggggg</a>
+		<a href="content.html#17">hhhhhhhhhhhhhh</a>
+		<a href="content.html#18">iiiiiiiiiiiii</a>
+		<a href="content.html#19">kkkkkkkkkk</a>
+		<a href="content.html#20">llllllllll</a>
+		<a href="content.html#21">mmmmmmmmm</a>        </div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<!--菜单HTML Start-->
+	<div id="page-tab">
+		<button class="tab-btn" id="page-prev"></button>
+		<nav id="page-tab-content">
+			<div id="menu-list">                </div>
+		</nav>
+		<button class="tab-btn" id="page-next"></button>
+		<div id="page-operation">
+			<div id="menu-all">
+				<ul id="menu-all-ul">
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--菜单HTML End-->
+	<!--iframe Start (根据页面顶部占用高度，自行调整高度数值)-->
+	<div id="page-content" style="height: calc(100% - 155px);">        </div>
+	<!--iframe End-->
+
+<div style="text-align:center;margin:-50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>适用浏览器：360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. 不支持IE8及以下浏览器。</p>
+<p>来源：<a href="http://www.lanrenzhijia.com/" target="_blank">懒人素材</a></p>
+</div>
+</div>
+
+<script>
+//初始化a标签链接到tab
+$(".menu a").tab();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="plugins/colpick/css/colpick.css">
+		<link rel="stylesheet" href="plugins/tabs/css/tabstyle.css">
+		<link rel="stylesheet" href="static/css/index.css" />
+		
+		
+		<script src="plugins/jquery.min.js"></script>
+		<script src="plugins/layer-v3.1.1/layer/layer.js"></script>
+		<script src="plugins/vue.js"></script>
+		<script src="plugins/tabs/js/tab.js"></script>
+		<script src="plugins/js-xlsx/xlsx.js"></script>
+		<script src="plugins/ColorPicker/jquery.colorpicker.js"></script>
+		<script src="plugins/colpick/js/colpick.js"></script>
+		<script src="static/js/index.js"></script>
+	</head>
+	<body>
+		<div id="tab-null">
+			<a></a>
+		</div>
+		<div id="vm">
+			
+			
+			<div class="head">
+				<div class="menu">
+					<div class="menu-item active" data-con="begin" @click="switchMenu($event)">
+						<span><i class="fa fa-star" ></i></span>
+						开始
+					</div>
+					<div class="menu-item" data-con="formula" @click="switchMenu($event)">
+						<span><i class="fa fa-tags" ></i></span>
+						公式
+					</div>
+					<div class="menu-item" data-con="data" @click="switchMenu($event)">
+						<i class="fa fa-database" ></i>
+						数据
+					</div>
+					<div class="menu-item" data-con="instrument" @click="switchMenu($event)">
+						<i class="fa fa-paperclip" ></i>
+						工具
+					</div>
+					<div class="menu-item" data-con="system" @click="switchMenu($event)">
+						<i class="fa fa-cog" ></i>
+						系统
+					</div>
+				</div>
+				<div class="tool">
+					<div class="tool-box" id="begin">
+						
+						<!-- 文件 工具 -->
+						<div class="tool-item file">
+							<div class="left">
+								<i class="fa fa-folder-open" ></i>
+								<div class="icon" @click="openToolList($event)">
+									<span>文件</span>
+									<i class="fa fa-caret-down" ></i>
+								</div>
+								<div class="tool-list" hidden>
+									<li class="tool-list-item" data-family="SimSun" @click="choseFontFamily($event)">新建</li>
+									<li class="tool-list-item" data-family="SimSun" @click="openFile($event)">
+										本地打开
+										<input id="openFile" type="file" accept="application/vnd.ms-excel" hidden @change="readFile($event)">
+									</li>
+									<!--<li class="tool-list-item" data-family="SimSun" @click="openFileOnline($event)">
+										在线打开
+									</li>-->
+									<li class="tool-list-item" data-family="SimSun" @click="saveFile($event)">本地保存</li>
+									<!--<li class="tool-list-item" data-family="SimSun" @click="saveFileOnline($event)">在线保存</li>-->
+								</div>
+							</div>
+							
+							<div class="right">
+								
+								<div class="common save-file-online" @click="openFileOnline($event)">
+									<i class="fa fa-file-text-o" aria-hidden="true"></i>
+									打开
+								</div>
+								<div class="common save-file-online" @click="saveFileOnline($event)">
+									<i class="fa fa-floppy-o" aria-hidden="true"></i>
+									保存
+								</div>
+								
+							</div>
+						</div>
+						
+						<!--预览-->
+						<div class="tool-item preview" @click="preview($event)">
+							<div class="con" >
+								<i class="fa fa-eye" aria-hidden="true"></i>
+								<div class="text">
+									预览
+								</div>
+							</div>
+						</div>
+						
+						<!-- 复制 粘贴 剪切工具 -->
+						<div class="tool-item plate">
+							<!--复制-->
+							<button class="copy" @click="copy($event)">
+								<i class="fa fa-files-o" ></i>
+								<span>复制</span>
+							</button>
+							<!--剪切-->
+							<button class="cut" @click="cut($event)">
+								<i class="fa fa-scissors" ></i>
+								<span>剪切</span>
+							</button>
+							<!--粘贴-->
+							<div class="paste" @click="paste($event)">
+								<i class="fa fa-clipboard" ></i>
+								<span>粘贴</span>
+							</div>
+							
+						</div>
+						
+						
+						<!-- 格式刷 工具 -->
+						<div class="tool-item format">
+							<div class="brush" @click="formatBrush($event)">
+								<i class="fa fa-paint-brush" ></i>
+								<span>格式刷</span>
+							</div>
+						</div>
+						
+						<!-- 文本工具 字体 字号... -->
+						<div class="tool-item word">
+							<!-- 字体和字号   输入选择 -->
+							<div class="input">
+								<div class="family">
+									<input value="宋体">
+									<i class="fa fa-caret-down down" @click="openFamilyList($event)"></i>
+									<div class="tool-list" hidden>
+										<li class="tool-list-item" data-family="SimSun" @click="choseFontFamily($event)">宋体</li>
+										<li class="tool-list-item" data-family="SimHei" @click="choseFontFamily($event)">黑体</li>
+										<li class="tool-list-item" data-family="Microsoft Yahei" @click="choseFontFamily($event)">微软雅黑</li>
+									</div>
+								</div>
+								<div class="size">
+									<input value="12" v-model="tool.fontSize">
+									<i class="fa fa-caret-down down" @click="openSizeList($event)"></i>
+									<i class="fa fa-plus-square"  @click="addFontSize($event)"></i>
+									<i class="fa fa-minus-square"  @click="minusFontSize($event)"></i>
+									<div class="tool-list" hidden>
+										<li class="tool-list-item" @click="choseFontSize($event)">6</li>
+										<li class="tool-list-item" @click="choseFontSize($event)">8</li>
+										<li class="tool-list-item" @click="choseFontSize($event)">10</li>
+										<li class="tool-list-item" @click="choseFontSize($event)">12</li>
+										<li class="tool-list-item" @click="choseFontSize($event)">14</li>
+										<li class="tool-list-item" @click="choseFontSize($event)">16</li>
+										<li class="tool-list-item" @click="choseFontSize($event)">18</li>
+										<li class="tool-list-item" @click="choseFontSize($event)">22</li>
+									</div>
+								</div>
+							</div>
+							<!-- 字体  快捷工具 -->
+							<div class="quick">
+								<!--加粗-->
+								<div class="bold" title="加粗">
+									<i class="fa fa-bold"   @click="choseBold($event)"></i>
+								</div>
+								<!--斜体-->
+								<div class="italic" title="斜体">
+									<i class="fa fa-italic"  @click="choseItalic($event)"></i>
+								</div>
+								<!--下划线-->
+								<div class="under-line" title="下划线">
+									<i class="fa fa-underline"  @click="choseUnderline($event)"></i>
+								</div>
+								
+								<!-- 前景色 颜色 -->
+								<div class="color" id="font-color" title="颜色">
+									<i class="fa fa-font" ></i>
+									<i class="fa fa-caret-down"></i>
+								</div>
+								<!-- 背景色颜色 -->
+								<div class="bg-color" id="bg-color" title="背景色">
+									<i class="fa fa-shower" ></i>
+									<i class="fa fa-caret-down"></i>
+								</div>
+								<!-- 选择边框 -->
+								<div class="border" title="边框">
+									<i class="fa fa-table" ></i>
+									<i class="fa fa-caret-down" @click="openBorder($event)"></i>
+									<div class="tool-list" hidden>
+										<li class="tool-list-item" @click="cancelBorder($event)">取消边框</li>
+										<li class="tool-list-item" @click="addBorder($event)">添加边框</li>
+										<li class="tool-list-item" @click="leftBorder($event)">左边框</li>
+										<li class="tool-list-item" @click="rightlBorder($event)">右边框</li>
+										<li class="tool-list-item" @click="topBorder($event)">上边框</li>
+										<li class="tool-list-item" @click="bottomBorder($event)">下边框</li>
+									</div>
+								</div>
+							</div>
+							
+
+						</div>
+						
+						
+						<!-- 布局  居中 靠左 靠右。。。 -->
+						<div class="tool-item flex">
+							<div class="vertical">
+								<div class="top" title="靠上">
+									<i class="fa fa-sort-asc" @click="flexTop($event)"></i>
+								</div>
+								<div class="middle" title="居中">
+									<i class="fa fa-sort" @click="flexMiddle($event)"></i>
+								</div>
+								<div class="bottom" title="靠下">
+									<i class="fa fa-sort-desc" @click="flexBottom($event)"></i>
+								</div>
+								<!--减少缩进量-->
+								<div class="outdent" title="减少缩进量">
+									<i class="fa fa-outdent" ></i>
+								</div>
+								<!--添加缩进量-->
+								<div class="indent" title="添加缩进量">
+									<i class="fa fa-indent" ></i>
+								</div>
+							</div>
+							<div class="horizontal">
+								<div class="left" title="靠左">
+									<i class="fa fa-align-left" @click="flexLeft($event)"></i>
+								</div>
+								<div class="center" title="居中">
+									<i class="fa fa-align-center" @click="flexCenter($event)"></i>
+								</div>
+								<div class="right" title="靠右">
+									<i class="fa fa-align-right" @click="flexRight($event)"></i>
+								</div>
+								<div class="between" title="两边布局">
+									<i class="fa fa-align-justify" @click="flexBetween($event)"></i>
+								</div>
+								<div class="around" title="平均分布">
+									<i class="fa fa-exchange" ></i>
+								</div>
+							</div>
+						</div>
+						
+						
+						<!--  合并单元格  -->
+						<div class="tool-item mergeCell">
+							<div class="columns">
+								<i class="fa fa-columns" ></i>
+							</div>
+							<div class="icon" @click="openToolList($event)">
+								<span>合并/拆分单元格</span>
+								<i class="fa fa-caret-down"></i>
+							</div>
+							<div class="tool-list" hidden>
+								<li class="tool-list-item" @click="mergeCell($event)">合并单元格</li>
+								<li class="tool-list-item" @click="splitCell($event)">拆分单元格</li>
+							</div>
+						</div>
+						
+						
+						
+						<!-- 插入单元格 -->
+						<div class="tool-item insertCell">
+							<div class="insert">
+								<i class="fa fa-sign-in" ></i>
+							</div>
+							<div class="icon" @click="openToolList($event)">
+								<span>插入单元格</span>
+								<i class="fa fa-caret-down"></i>
+							</div>
+							<div class="tool-list" hidden>
+								<li class="tool-list-item">活动单元格上移</li>
+								<li class="tool-list-item">活动单元格左移</li>
+								<li class="tool-list-item">添加整行</li>
+								<li class="tool-list-item">添加整列</li>
+							</div>
+						</div>
+						
+						<!-- 删除单元格 -->
+						<div class="tool-item unsertCell">
+							<div class="unsert">
+								<i class="fa fa-sign-out" ></i>
+							</div>
+							<div class="icon" @click="openToolList($event)">
+								<span>删除单元格</span>
+								<i class="fa fa-caret-down"></i>
+							</div>
+							<div class="tool-list" hidden>
+								<li class="tool-list-item">下方单元格上移</li>
+								<li class="tool-list-item">右方单元格左移</li>
+								<li class="tool-list-item">删除整行</li>
+								<li class="tool-list-item">删除整列</li>
+							</div>
+						</div>
+						
+						
+						<!-- 常用函数 -->
+						<div class="tool-item function">
+							<div class="formula" @click="choseFunction($event)">
+								<i class="fa fa-header" ></i>
+							</div>
+							<div class="icon" @click="openToolList($event)">
+								<span>函数</span>
+								<!--<i class="fa fa-caret-down"></i>-->
+							</div>
+							<div class="tool-list" hidden>
+								<li class="tool-list-item">求和</li>
+								<li class="tool-list-item">平均值</li>
+								<li class="tool-list-item">最大值</li>
+								<li class="tool-list-item">最小值</li>
+							</div>
+						</div>
+						
+						
+					</div>
+					
+					
+					<!-- 菜单  公式函数 -->
+					<div class="tool-box" id="formula">
+						<!-- 算术运算函数 -->
+						<div class="tool-item count">
+							<div class="left">
+								<div class="formula" @click="choseFunction($event)">
+									<i class="fa fa-header" ></i>
+								</div>
+								<div class="icon" @click="openToolList($event)">
+									<span>运算函数</span>
+									<!--<i class="fa fa-caret-down"></i>-->
+								</div>
+								<div class="tool-list" hidden>
+									<li class="tool-list-item">求和</li>
+									<li class="tool-list-item">最大值</li>
+									<li class="tool-list-item">最小值</li>
+									<li class="tool-list-item">平均值</li>
+								</div>
+							</div>
+							<div class="right">
+								<div class="common sum-function">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									求和函数
+								</div>
+								<div class="common max-function">
+									<i class="fa fa-maxcdn" aria-hidden="true"></i>
+									最大值
+								</div>
+								<div class="common min-function">
+									<i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+									最小值
+								</div>
+								<!--<div class="common average-function">
+									<i class="fa fa-shield" aria-hidden="true"></i>
+									平均值
+								</div>-->
+							</div>
+							
+						</div>
+						
+						<!-- 时间函数 -->
+						<div class="tool-item time">
+							<div class="left">
+								<div class="formula" @click="choseFunction($event)">
+									<i class="fa fa-calendar-o"></i>
+								</div>
+								<div class="icon" @click="openToolList($event)">
+									<span>时间函数</span>
+									<!--<i class="fa fa-caret-down"></i>-->
+								</div>
+								<div class="tool-list" hidden>
+									<li class="tool-list-item">获取当前时间</li>
+								</div>
+							</div>
+							<div class="right">
+								<div class="common sum-function">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									获取当前时间
+								</div>
+							</div>
+						</div>
+						
+						<!-- 查表函数 -->
+						<div class="tool-item check-table">
+							<div class="left">
+								<div class="formula" @click="choseFunction($event)">
+									<i class="fa fa-table"></i>
+								</div>
+								<div class="icon" @click="openToolList($event)">
+									<span>查表函数</span>
+									<!--<i class="fa fa-caret-down"></i>-->
+								</div>
+								<div class="tool-list" hidden>
+									<li class="tool-list-item">二维表查值</li>
+									<li class="tool-list-item">三维表查值</li>
+								</div>
+							</div>
+							<div class="right">
+								<div class="common sum-function">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									二维表查值
+								</div>
+								<div class="common sum-function">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									三维表查值
+								</div>
+							</div>
+						</div>
+						
+						<!-- 数据库函数 -->
+						<div class="tool-item check-table">
+							<div class="left">
+								<div class="formula" @click="choseFunction($event)">
+									<i class="fa fa-database"></i>
+								</div>
+								<div class="icon" @click="openToolList($event)">
+									<span>数据库函数</span>
+									<!--<i class="fa fa-caret-down"></i>-->
+								</div>
+								<div class="tool-list" hidden>
+									<li class="tool-list-item">时段日旬月最大</li>
+									<li class="tool-list-item">时段日旬月最小</li>
+									<li class="tool-list-item">时段日旬月平均值</li>
+								</div>
+							</div>
+							<div class="right">
+								<div class="common sum-function">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									时段日旬月最大
+								</div>
+								<div class="common sum-function">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									时段日旬月最小
+								</div>
+								<div class="common sum-function">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									时段日旬月平均值
+								</div>
+							</div>
+						</div>
+						
+						<!-- 条件函数 -->
+						<div class="tool-item term">
+							<div class="left">
+								<div class="formula" @click="choseFunction($event)">
+									<i class="fa fa-deaf"></i>
+								</div>
+								<div class="icon" @click="openToolList($event)">
+									<span>条件函数</span>
+									<!--<i class="fa fa-caret-down"></i>-->
+								</div>
+								<div class="tool-list" hidden>
+									<li class="tool-list-item">根据条件返回数据值</li>
+								</div>
+							</div>
+							<div class="right">
+								<div class="common sum-function">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									根据条件返回数据值
+								</div>
+							</div>
+						</div>
+						
+						<!-- 水务计算函数 -->
+						<div class="tool-item term">
+							<div class="left">
+								<div class="formula" @click="choseFunction($event)">
+									<i class="fa fa-tint"></i>
+								</div>
+								<div class="icon" @click="openToolList($event)">
+									<span>水务计算函数</span>
+									<!--<i class="fa fa-caret-down"></i>-->
+								</div>
+								<div class="tool-list" hidden>
+									<li class="tool-list-item">水库水量平衡计算</li>
+								</div>
+							</div>
+							<div class="right">
+								<div class="common sum-function">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									水库水量平衡计算
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 数据绑定 -->
+					<div class="tool-box" id="data" hidden>
+						
+						<!-- 属性绑定 -->
+						<div class="tool-item attr-bind">
+							<div class="left">
+								<div class="top" @click="attrBind($event)">
+									<i class="fa fa-paperclip" aria-hidden="true"></i>
+								</div>
+								<div class="icon" @click="attrBind($event)">
+									<span>属性绑定</span>
+								</div>
+							</div>
+							<div class="right">
+								<div class="common sishuiwei" @click="attrBind($event,'sishuiwei')">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									死水位
+								</div>
+								<div class="common xunxianshuiwei" @click="attrBind($event,'xunxianshuiwei')">
+									<i class="fa fa-maxcdn" aria-hidden="true"></i>
+									汛限水位
+								</div>
+								<div class="common shejishuiwei" @click="attrBind($event,'shejishuiwei')">
+									<i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+									设计水位
+								</div>
+							</div>
+						</div>
+						
+						<!-- 值绑定 -->
+						<div class="tool-item value-bind">
+							<div class="left">
+								<div class="top" @click="valueBind($event)">
+								<i class="fa fa-gg" aria-hidden="true"></i>
+							    </div>
+							    
+							    <div class="icon" @click="valueBind($event)">
+								<span>值绑定</span>
+							    </div>
+							</div>
+							
+							<div class="right">
+								<div class="common rukuliuliang" @click="valueBind($event,'rukuliuiang')">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									入库流量
+								</div>
+								<div class="common chukuliuliang" @click="valueBind($event,'chukuliuliang')">
+									<i class="fa fa-maxcdn" aria-hidden="true"></i>
+									出库流量
+								</div>
+								<div class="common qishuiliuliang" @click="valueBind($event,'qishuiliuliang')">
+									<i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+									弃水流量
+								</div>
+								
+								
+							</div>
+						</div>
+						
+						<!-- 时间绑定 -->
+						<div class="tool-item timer-bind">
+							<div class="left">
+								<div class="top" @click="timeBind($event)">
+									<i class="fa fa-clock-o" aria-hidden="true"></i>
+								</div>
+								<div class="icon" @click="timeBind($event)">
+									<span>时间绑定</span>
+								</div>
+							</div>
+							<div class="right">
+								<div class="common rukuliuliang" @click="timeBind($event,'rukuliuiang')">
+									<i class="fa fa-handshake-o" aria-hidden="true"></i>
+									入库流量
+								</div>
+								<div class="common chukuliuliang" @click="timeBind($event,'chukuliuliang')">
+									<i class="fa fa-maxcdn" aria-hidden="true"></i>
+									出库流量
+								</div>
+								<div class="common qishuiliuliang" @click="timeBind($event,'qishuiliuliang')">
+									<i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+									弃水流量
+								</div>
+							</div>
+						</div>
+						
+						<!-- 导入数据 -->
+						<div class="tool-item data-bind">
+							<div class="left">
+								<div class="top" @click="choseFunction($event)">
+									<i class="fa fa-cubes" aria-hidden="true"></i>
+								</div>
+								<div class="icon" @click="openToolList($event)">
+									<span>导入数据</span>
+								</div>
+							</div>
+							<div class="left">
+								
+							</div>
+						</div>
+					</div>
+					<div class="tool-box" id="instrument" hidden></div>
+					<div class="tool-box" id="system" hidden></div>
+				</div>
+			</div>
+			
+			
+			<!--<div class="nav">
+				
+			</div>-->
+			
+  <div id="page-tab">
+    <div class="lef_top_icon"></div>
+    <div id="page-prev"><<</div>
+    <div id="page-tab-box">
+      <nav id="page-tab-content">
+        <div id="menu-list"> </div>
+      </nav>
+    </div>
+    <div id="page-next">>></div>
+    <div class="right_top_icon"></div>
+  </div>
+  
+  <!--<div class="asd">测试</div>-->
+			
+			
+			<div class="content">
+				<div class="info"></div>
+				<div class="main-table">
+					
+					<div class="table-head" id="table-head">
+						<table>
+				        	<tr>
+				        		<th></th>
+								<th class="top-head" v-for="(row,index) in rowHead" :key=`rowth${index}`>{{row.value}}</th>
+							</tr>
+						</table>
+					</div>
+					
+					
+					<div class="table-left-and-body">
+						
+						
+						<div class="table-left" id="table-left">
+							<table>
+								<tr v-for="(row, index) in colHead" :key=`row${index}`>
+									<td class="left-index">{{index+1}}</td>
+								</tr>
+							</table>
+						</div>
+						
+						
+						<div class="table-body" id="table-body" @scroll="tableScroll($event)">
+							<table>
+								<tbody>
+									<tr v-for="(row, index) in rowHead" :key=`row${index}`>
+										<td class="cell-td" v-for="(col,colIndex) in colHead" :id=`row${row.id}-col${col.id}` :key=`${row.id}-${col.id}` >
+											<!--<div class="cell" :class=`${(col.active&&row.active)?'active':''}` :data-row=`${row.id}` :data-col=`${col.id}`  @click="cellClick($event)">
+												
+											</div>-->
+											
+											<input class="cell" :class=`${(col.active&&row.active)?'active':''}` :data-row=`${row.id}` :data-col=`${col.id}`  @click="cellClick($event)"
+													v-model="row.rowData[colIndex]">
+											
+											
+										</td>
+									</tr>
+									
+								</tbody>
+							</table>
+							
+						</div>
+						
+						
+					</div>
+					
+					
+				</div>
+			</div>
+			
+		</div>
+		
+		
+		<div id="selectDiv"></div>
+		
+		
+	</body>
+</html>

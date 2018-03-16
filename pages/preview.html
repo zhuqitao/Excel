@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.css" />
+		<link rel="stylesheet" href="../static/css/preview.css" />
+		
+		
+		<script src="../plugins/jquery.min.js"></script>
+		<script src="../plugins/layer-v3.1.1/layer/layer.js"></script>
+		<script src="../plugins/vue.js"></script>
+		<script src="../static/js/preview.js"></script>
+	</head>
+	<body>
+		<div id="tab-null">
+			<a></a>
+		</div>
+		<div id="vm">
+			
+			<div class="content">
+				<div class="info"></div>
+				<div class="main-table">
+					
+					<div class="table-head" id="table-head">
+						<table>
+				        	<tr>
+				        		<th></th>
+								<th class="top-head" v-for="(row,index) in rowHead" :key=`rowth${index}`>{{row.value}}</th>
+							</tr>
+						</table>
+					</div>
+					
+					
+					<div class="table-left-and-body">
+						
+						
+						<div class="table-left" id="table-left">
+							<table>
+								<tr v-for="(row, index) in colHead" :key=`row${index}`>
+									<td class="left-index">{{index+1}}</td>
+								</tr>
+							</table>
+						</div>
+						
+						
+						<div class="table-body" id="table-body" @scroll="tableScroll($event)">
+							<table>
+								<tbody>
+									<tr v-for="(row, index) in rowHead" :key=`row${index}`>
+										<td class="cell-td" v-for="(col,colIndex) in colHead" :id=`row${row.id}-col${col.id}` :key=`${row.id}-${col.id}` >
+											<!--<div class="cell" :class=`${(col.active&&row.active)?'active':''}` :data-row=`${row.id}` :data-col=`${col.id}`  @click="cellClick($event)">
+												
+											</div>-->
+											<input class="cell" :class=`${(col.active&&row.active)?'active':''}` :data-row=`${row.id}` :data-col=`${col.id}`  @click="cellClick($event)"
+												 v-model="row.rowData[colIndex]">
+											
+										</td>
+									</tr>
+									
+								</tbody>
+							</table>
+						</div>
+						
+						
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+		
+		<div id="selectDiv"></div>
+		
+		
+	</body>
+</html>

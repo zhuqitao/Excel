@@ -1,0 +1,42 @@
+html,body{
+	height: 100%;
+	padding: 0;
+	margin:0;
+	font-size: 14px;
+}
+.vm{
+	height: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+}
+.head{
+	font-size: 16px;
+}
+.content{
+	height: 90%;
+}
+.content table{
+	border-collapse: collapse;
+	width: 100%;
+	text-align: left;
+}
+th{
+	color: #666;
+	font-weight: 300;
+	font-size: 12px;
+}
+tbody tr{
+	cursor: pointer;
+	box-sizing: border-box;
+}
+tbody tr:hover{
+	background-color: #F1F6FD;
+}
+tbody tr.active{
+	background-color: #D4E7FD;
+}
+td{
+	padding: 2px;
+	font-size: 13px;
+	color: #444;
+}

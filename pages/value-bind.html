@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		<link rel="stylesheet" href="../plugins/ztree/css/zTreeStyle/zTreeStyle.css"/>
+		<link rel="stylesheet" href="../static/css/value-bind.css"/>
+		 
+	</head>
+	<body>
+		<input id="name" hidden>
+		<div class="vm" id="vm">
+			<div class="left">
+				<div class="attr-info">显示水电站水位的列表信息</div>
+				<input class="valueName" >
+				<ul id="treeDemo" class="ztree"></ul>
+			</div>
+			<div class="right">
+				<div class="time-area">
+					<label class="start-time">时间范围</label>
+					<input type="text" class="layui-input" id="test1">
+				</div>
+				<div class="content">
+					<div class="describe">
+						 各个量测点的取值范围
+					</div>
+					
+					<div class="max">
+						<input type="radio" name="radio" checked="checked" value="最大值100" />最大值<br/>
+						<input type="radio" name="radio" value="最小值10" />最小值<br/>
+						<input type="radio" name="radio" value="实时值50" />实时值<br/>
+					</div>
+					<div class="min">
+						
+					</div>
+					<div class="current">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script src="../plugins/vue.js"></script>
+		<script src="../plugins/jquery.min.js"></script>
+		<script src="../plugins/ztree/js/jquery.ztree.core.min.js"></script>
+		<script src="../plugins/layDate/laydate/laydate.js"></script>
+		<script src="../static/js/value-bind.js"></script>
+
+	</body>
+</html>

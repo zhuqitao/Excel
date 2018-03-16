@@ -1,0 +1,20 @@
+{
+	"data": [
+		{
+			"名字":"=LIST(NAME)",
+			"昨日末水位(米)":"SHUIWEI",
+			"昨日末水位与前日差(米)":"=REDUCE(SHUIWEI,SHUIWEI)",
+			"昨日可调水量(万立方米)":"KETIAOSHUILIANG",
+			"昨日末蓄水量差(万立方米)":"=REDUCE(XUSHUI)",
+			"死水位(米)":"SISHUIWEI",
+			"死库容(万立方米)":"SIKURONG",
+			"耗水率(亿立方米/千瓦)":"HAOSHUILV",
+			"昨日末总蓄能(万千瓦时)":"=SUM(XUNENG)",
+			"昨日末总蓄能差(万千瓦时)":"=REDUCE(XUNENG)",
+			"昨日末径流电量(万千瓦时)":"JINGLIULIANG",
+			"昨日平均入库流量(立方米/秒)":"=AVERAGE(RUKULIULIANG)",
+			"昨日平均出库流量(立方米/秒)":"=AVERAGE(CHUKULIULIANG)",
+			"昨日可调水量占有效库容比重(%)":"=PERCENT(KETIAOSHUILIANG,YOUXIAOKURONG)"
+		}
+	]
+}

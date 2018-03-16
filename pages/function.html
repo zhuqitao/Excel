@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../static/css/function.css"/>
+	</head>
+
+ 	<body>
+		<div class="vm" id="vm">
+			
+			<input class="functionResult" name="functionResult" hidden>
+			<input class="functionName" name="functionName" hidden>
+			
+			<div class="main">
+				<div class="function">
+					<div class="senior">
+						<label>函数类型：</label>
+						<select @change="changeFunctionSeniorType($event)">
+							<option v-for="(item, key) in functionList" :value="key" :key="item.id">{{item.name}}</option>
+						</select>
+					</div>
+					<div class="junior">
+						<label>函数名字：</label>
+						<select @change="changeFunctionJuniorType($event)">
+							<option>请选择...</option>
+							<option v-for="item in functionJuniorList" :value="item.engName">{{item.name}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="parame">
+					<table>
+						<tr>
+							<th width="15%">参数</th>
+							<th width="50%">值</th>
+							<th width="35%">说明</th>
+						</tr>
+						<tr v-for="item in paramesList">
+							<td>{{item.name}}</td>
+							<td><input :class=`parame${item.id}`></td>
+							<td>{{item.info}}</td>
+						</tr>
+						<!--<tr>
+							<td>参数2</td>
+							<td><input class="parame2"></td>
+							<td>第二个参数</td>
+						</tr>-->
+					</table>
+				</div>
+			</div>
+			<div class="instruction">
+				返回某一单元格区域所有数值之和
+			</div>
+			
+			
+		</div>
+		<!--<footer>
+			<button class="makesure">确定</button>
+		</footer>-->
+		
+		<script src="../plugins/vue.js"></script>
+		<script src="../plugins/jquery.min.js"></script>
+		<script src="../static/js/function.js"></script>
+	</body>
+</html>

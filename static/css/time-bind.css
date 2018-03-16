@@ -1,0 +1,73 @@
+
+html, body{
+	height: 100%;
+	margin:0;
+	padding: 10px;
+	box-sizing: border-box;
+	font-size: 12px;
+}
+.vm{
+	height: 100%;
+	box-sizing: border-box;
+	display: flex;
+	border-bottom: solid 1px #ddd;
+}
+.left{
+	width: 50%;
+	border-right: solid 1px #ddd;
+}
+.right{
+	box-sizing: border-box;
+	padding: 0 10px;
+}
+.right .content{
+	margin-top: 20px;
+}
+.right .content>div{
+	margin-top: 5px;
+}
+.attr-info{
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+	height: 10%;
+	font-size: 14px;
+	margin-top: 10px;
+}
+.timeName {
+ 	margin-top: 10px;
+ 	height: 24px;
+    border-radius: 6px;
+ 	
+ }
+ #test1,#test2  {
+   	height: 24px;
+    border-radius: 6px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+   } 
+ .start-time {
+ 	font-family: "微软雅黑";
+ 	font-size: 14px;
+ 	margin-top: 10px;
+ 	margin-left: 10px;
+ 	
+ }
+ .time-area{
+ 	height: 35%;
+ 	margin-top: 10px;
+ 	border: 1px solid grey;
+ }
+ .content{
+ 	height: 45%;
+ 	border:1px solid grey 
+ 	
+ }
+.describe{
+	font-family: '微软雅黑';
+	font-size: 14px;
+	margin-top: 10px;
+    margin-left: 10px;
+	
+}  

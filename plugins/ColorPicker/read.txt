@@ -1,0 +1,31 @@
+这是从网上下载下来的，自己试也下可以用，就共享下.
+
+注意：这里的  jquery 是1.8之前的版本，1.8以上的版本不可以使用。
+
+下去查了下，原因如下：
+以下三种方法在jQuery1.8之后都不推荐使用，官方在1.9时已经取消使用live()方法了，所以建议都使用on()方法。
+bind() 
+
+　　$("p").bind("click",function(){
+　　　　alert("The paragraph was clicked.");
+　　});
+
+
+delegate()
+
+　　$("#div2").delegate("p","click",function(){
+　　　　$(this).css("background-color","pink");
+　　});
+
+
+live()
+　　$("#div2").live("click",function(){
+　　　　$(this).css("background-color","pink");
+　　});
+
+
+
+那这里用取色器时，将 jquery.colorpicker.js 中 live方法 用 on替换即可，替换后在 1.8 以上的jquery版本中也能用了.
+
+在 jquery.colorpicker.js 中查找 live方法，替换为 on ,具体就不说了
+ 
