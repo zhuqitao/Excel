@@ -19,6 +19,6 @@
 
 
 ## 项目截图
-
+![](https://github.com/zhuqitao/Excel/raw/master/static/img/img1.png)
 ## 运行方式
 因为是个存前端的DEMO，直接把index.html在浏览器中打开即可
